@@ -3,11 +3,11 @@ import string
 import os
 import email.Utils
 from email.mime.text import MIMEText
-from configobj import ConfigObj
-
+#from configobj import ConfigObj
+from reqs.configobj import ConfigObj
 __Version__ = "0.1.5"
-                                                                   #If you got here, please go and edit settings.py !!!!
-config = ConfigObj("settings.cfg")                                 #Although this isnt technically a .py file, it's just easy for packaging.
+                                                                          #If you got here, please go and edit settings.py !!!!
+config = ConfigObj("./reqs/settings.cfg")                                 #Although this isnt technically a .py file, it's just easy for packaging.
 sendmail = config['sendmail']
 path = config['path']
 email = config['email']

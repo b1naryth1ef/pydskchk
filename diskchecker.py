@@ -1,7 +1,6 @@
 import smtplib
 import string
 import os
-#import mailer
 import email.Utils
 from email.mime.text import MIMEText
 from configobj import ConfigObj
@@ -27,6 +26,7 @@ def printer(prints):
 	else:
 		None
 def doemail2(location,reason):
+	subject = "Disk/Folder:"+path+" is missing!"
 	func = "There is a disk or folder error (001) on disk/folder: "+path+" ."
 	msg = MIMEText(func)
 	msg['Subject'] = 'Temperature'

@@ -25,7 +25,7 @@ def printer(prints):
 		print prints
 	else:
 		None
-def doemail2(location,reason):
+def doemail(location,reason):
 	subject = "Disk/Folder:"+path+" is missing!"
 	func = "There is a disk or folder error (001) on disk/folder: "+path+" ."
 	msg = MIMEText(func)
@@ -40,16 +40,6 @@ def doemail2(location,reason):
 	server.sendmail(sentfrom, email, msg.as_string())
 	server.quit()
 		
-def doemail(location,reason):
-	p = os.popen("%s -t" % sendmail, "w")
-	p.write("To:%s\\n" % email)  
-	p.write("Subject: DISK ERROR ON DISK %s\\n" % path)
-	p.write("\\n") # blank line separating headers from body
-	p.write("PATH: "+path+"\\n")
-	p.write("REASON: "+reason+" \\n")
-	sts = p.close()
-	if sts != 0:
-		print "Sendmail exit status", sts
 
 while True:
 	if os.path.exists(path) == True:
@@ -59,10 +49,10 @@ while True:
 		printer("Disk/Folder Not Found!")
 		x = "1"
 		reason = "Not Found!"
-		doemail2(path,reason)
+		doemail(path,reason)
 		break
 	else:
-		doemail2(path,reason)
+		doemail(path,reason)
 		print "ERRORZ"
 		reason = "Random error!"
 		

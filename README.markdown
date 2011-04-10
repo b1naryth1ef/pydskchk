@@ -8,9 +8,11 @@ PyDskChk was developed for UZ's large a** RAID system (Over 300 disks to monitor
 Thanks To
 ==========
 PyDskChk deserves credit to a few people...  
+----------------------------------------------
 Bob2 on Freenode's Python for recommending while True:  
 [Patrick](http://talk.jeelabs.net/topic/704) from the JeeLabs talk forums for getting me intrested in making the disk checker email people...
     
 PyDskChk uses a few systems...  
+----------------------------------
 [ConfigObj](http://bit.ly/eauaQx) was written by Michael Foord and Nicola Larosa. It's currently used for parsing settings.cfg into our diskchecker.py  
 [SMTPLib](http://effbot.org/librarybook/smtplib.htm) a included module in Python 2.5 and later, it's the core to the email system.  

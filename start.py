@@ -1,0 +1,3 @@
+import diskchecker
+
+diskchecker.main()

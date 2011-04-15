@@ -37,7 +37,7 @@ def doemail(location,reason):
 	subject = "Disk/Folder:"+path+" is missing!"
 	func = "There is a disk or folder error (001) on disk/folder: "+path+" ."
 	msg = MIMEText(func)
-	msg['Subject'] = 'Temperature'
+	msg['Subject'] = 'Disk error on"+path
 	msg['From'] = sentfrom
 	msg['To'] = email     # functions to send an email
 	server = smtplib.SMTP(smtpserver)

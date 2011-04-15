@@ -18,7 +18,15 @@ password = config['password']
 smtpserver = config['server']
 x = "0"
 
-
+def checker(chkpath):
+     while True:
+        if os.path.exists(chkpath) == True:
+    		return 1
+    	elif os.path.exists(chkpath) == False:
+            return 0
+    		break
+    	else:
+            return 2
 
 def printer(prints):
 	if x == "0":
@@ -40,19 +48,19 @@ def doemail(location,reason):
 	server.sendmail(sentfrom, email, msg.as_string())
 	server.quit()
 		
-
-while True:
-	if os.path.exists(path) == True:
-		printer("Disk/Folder Found")
-		x = "1"
-	elif os.path.exists(path) == False:
-		printer("Disk/Folder Not Found!")
-		x = "1"
-		reason = "Not Found!"
-		doemail(path,reason)
-		break
-	else:
-		doemail(path,reason)
-		print "ERRORZ"
-		reason = "Random error!"
+def main():
+    while True:
+    	if os.path.exists(path) == True:
+    		printer("Disk/Folder Found")
+    		x = "1"
+    	elif os.path.exists(path) == False:
+    		printer("Disk/Folder Not Found!")
+    		x = "1"
+    		reason = "Not Found!"
+    		doemail(path,reason)
+    		break
+    	else:
+    		doemail(path,reason)
+    		print "ERRORZ"
+    		reason = "Random error!"
 		

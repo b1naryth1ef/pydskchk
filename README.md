@@ -8,7 +8,7 @@ PyDskChk was developed for UZ's large a** RAID system (Over 300 disks to monitor
 ###Using it
 PyDskChk both has module and normal support. To run it just as a normal application, edit the /reqs/example_settings.cfg and rename it settings.cfg . Then run start.py and enjoy ;) To import this in a script, type the following:
   
-    import diskchecker.py
+    import reqs.diskchecker
     finder = diskchecker.checker(PATH)
     while true:
         if finder == "1":

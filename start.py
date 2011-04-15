@@ -1,3 +1,3 @@
-import diskchecker
+import reqs.diskchecker
 
 diskchecker.main()

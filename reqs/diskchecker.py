@@ -60,7 +60,6 @@ def doemail(location,reason):
 	server.quit()
 		
 def main():
-    versioncheck()
     while True:
     	if os.path.exists(path) == True:
     		printer("Disk/Folder Found")

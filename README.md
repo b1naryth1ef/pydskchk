@@ -19,11 +19,11 @@ PyDskChk both has module and normal support. To run it just as a normal applicat
             print "Error loading module"
   
 ###Roadmap
-PyDskChk is planned to be more then just a small tool. Later on this year a project will spawn using PyDskChk and other tools to provide an all-around system monitor / notifier for python. 
-V0.3 : Full email support, more settings and tweaking abilities. 
-v0.4 : Better module support. 
-v0.5 : Folder/File changes tracking
-V0.6 : Suport for more interfaces.
+PyDskChk is planned to be more then just a small tool. Later on this year a project will spawn using PyDskChk and other tools to provide an all-around system monitor / notifier for python.   
+V0.3 : Full email support, more settings and tweaking abilities.   
+v0.4 : Better module support.   
+v0.5 : Folder/File changes tracking  
+V0.6 : Suport for more interfaces.  
 
 ###Thanks To  
 ####PyDskChk deserves credit to a few people...  

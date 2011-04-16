@@ -5,7 +5,7 @@ import email.Utils
 from email.mime.text import MIMEText
 #from configobj import ConfigObj
 from reqs.configobj import ConfigObj
-__Version__ = "0.2.2"
+__Version__ = "0.2.3B"
                                                                           #If you got here, please go and edit settings.py !!!!
 config = ConfigObj("./reqs/settings.cfg")   
 versioner = config['version']                              #Although this isnt technically a .py file, it's just easy for packaging.

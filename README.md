@@ -17,13 +17,19 @@ PyDskChk both has module and normal support. To run it just as a normal applicat
             print "Error"
         elif finder == "3":
             print "Error loading module"
+  
+###Roadmap
+PyDskChk is planned to be more then just a small tool. Later on this year a project will spawn using PyDskChk and other tools to provide an all-around system monitor / notifier for python. 
+V0.3 : Full email support, more settings and tweaking abilities. 
+v0.4 : Better module support. 
+v0.5 : Folder/File changes tracking
+V0.6 : Suport for more interfaces.
 
-    
 ###Thanks To  
 ####PyDskChk deserves credit to a few people...  
 Bob2 on Freenode's Python for recommending while True:  
 [Patrick](http://talk.jeelabs.net/topic/704) from the JeeLabs talk forums for getting me intrested in making the disk checker email people...
-    
+  
 ####PyDskChk uses a few systems...  
 [ConfigObj](http://bit.ly/eauaQx) was written by Michael Foord and Nicola Larosa. It's currently used for parsing settings.cfg into our diskchecker.py  
 [SMTPLib](http://effbot.org/librarybook/smtplib.htm) a included module in Python 2.5 and later, it's the core to the email system.  

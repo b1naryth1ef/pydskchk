@@ -1,3 +1,3 @@
 import reqs.diskchecker
 
-diskchecker.main()
+reqs.diskchecker.main()

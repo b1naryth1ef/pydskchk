@@ -5,9 +5,10 @@ import email.Utils
 from email.mime.text import MIMEText
 #from configobj import ConfigObj
 from reqs.configobj import ConfigObj
-__Version__ = "0.1.5"
+__Version__ = "0.2.2"
                                                                           #If you got here, please go and edit settings.py !!!!
-config = ConfigObj("./reqs/settings.cfg")                                 #Although this isnt technically a .py file, it's just easy for packaging.
+config = ConfigObj("./reqs/settings.cfg")   
+versioner = config['version']                              #Although this isnt technically a .py file, it's just easy for packaging.
 sendmail = config['sendmail']
 path = config['path']
 email = config['email']
@@ -18,6 +19,16 @@ password = config['password']
 smtpserver = config['server']
 x = "0"
 
+def versioncheck():
+    if versioner == "DEV":
+        print "Running in developer Mode!"
+        devmode = "1"
+    elif versioner != __Version__:
+        print "ERROR: Please update your config to the current running version: "+__Version__+""
+        import sys
+        sys.exit()
+    else:
+        pass
 def checker(chkpath):
      while True:
         if os.path.exists(chkpath) == True:
@@ -49,6 +60,7 @@ def doemail(location,reason):
 	server.quit()
 		
 def main():
+    versioncheck()
     while True:
     	if os.path.exists(path) == True:
     		printer("Disk/Folder Found")
@@ -63,4 +75,3 @@ def main():
     		doemail(path,reason)
     		print "ERRORZ"
     		reason = "Random error!"
-		

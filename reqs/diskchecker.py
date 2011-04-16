@@ -42,11 +42,11 @@ def versioncheck():
 def updatecheck():
     import urllib
     urllib.urlretrieve ("http://wbbmx.org/code/pydskchk/versions.cfg", "versions.cfg")
-    config = ConfigObj("./versions.cfg")
-    latest = config['latest']
-    updurl = config['url']
-    isbeta = config['beta']
-    doupd = config['023b']
+    config2 = ConfigObj("./versions.cfg")
+    latest = config2['latest']
+    updurl = config2['url']
+    isbeta = config2['beta']
+    doupd = config2['023b']
     if doupd == "t":
         if isbeta == "t":
             if devmode == "1":

@@ -23,8 +23,8 @@ def checker(chkpath):
         if os.path.exists(chkpath) == True:
     		return 1
     	elif os.path.exists(chkpath) == False:
-            return 0
-    		break
+         return 0
+         break
     	else:
             return 2
 
@@ -37,7 +37,7 @@ def doemail(location,reason):
 	subject = "Disk/Folder:"+path+" is missing!"
 	func = "There is a disk or folder error (001) on disk/folder: "+path+" ."
 	msg = MIMEText(func)
-	msg['Subject'] = 'Disk error on"+path
+	msg['Subject'] = 'Disk error on ' + path
 	msg['From'] = sentfrom
 	msg['To'] = email     # functions to send an email
 	server = smtplib.SMTP(smtpserver)

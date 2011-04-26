@@ -85,15 +85,18 @@ def doemail(location,reason):
 def main():
     checkos()
     #updatecheck()
-    delayx = float(delay)  
+    delayx = float(delay)
     def tester():
         x = checker(path)
         if x == False:
             print "Disk/Folder Not Found!"
             reason = "Not Found!"
             doemail(path,reason)
+            import sys
+            sys.exit()
         else:
             time.sleep(delayx)
-            tester()
+
     print "Disk checker is running!"
-    tester()
+    while True:
+        tester()  

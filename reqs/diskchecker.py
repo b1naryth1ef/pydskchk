@@ -8,6 +8,7 @@ from reqs.configobj import ConfigObj
 import reqs.downloader
 import socket
 import urllib2
+from etc import MemoryMonitor
 __Version__ = "0.2.4.1B"
 versionhash = "001"
  
@@ -62,13 +63,16 @@ def updatecheck2():
 def checker(chkpath):
     return os.path.exists(chkpath)
 
-
+def memusage(): #not in use currently
+    memory_mon = MemoryMonitor('username')
+    used_memory = memory_mon.usage()
+    return used_memory
 def doemail(location,reason):
     exip = external()
     inip = internal()
     print "Sending email..."
     subject = "Disk/Folder:"+path+" is missing!"
-    func = "There is a disk or folder error (001) on disk/folder: "+path+" . External IP of: "+exip+" and internal IP of: "+inip+" ."
+    func = "There is a disk or folder error (001) on disk/folder: "+path+" . \nExternal IP of: "+exip+"\nInternal IP of: "+inip+" .\n"
     msg = MIMEText(func)
     msg['Subject'] = 'Disk error on ' + path
     msg['From'] = sentfrom

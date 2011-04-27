@@ -22,7 +22,9 @@ username : Your SMTP username
 password : Your SMTP password  
 server : The smtp server  
 os : Should be "mac" or "lin". Windows is buggy, if you really want to use it see the hacks section below.  
-delay : The delay between checks. The higher it is the less resources the script requires.  
+delay : The delay between checks. The higher it is the less resources the script requires.
+filechanges : Set this to "1" to track the changes of a file (This is very buggy currently...)  
+file : The file you want to track changes of (if filechanges is set to 1)    
   
 ####Module useage
 PyDskChk has very VERY basic module support. It was put in place as a holder for future versions. To use it, simply import the diskchecker.py file from /reqs/ and call diskchecker.checker(PATH). Below is a basic example of how to do this...
@@ -47,10 +49,13 @@ to this:
 	
 	elif osdis == "win":
     print "I IZ A HACKER!"
+  
+
 ####Side notes
 PyDskChk doesnt have a large footprint on your computer/servers resources. This is a screen grab of the basic Disk Checker running on Python 2.6 on Mac 10.6.6. 
 ![%0 CPU, 1 Thread, 4.7MB RAM, 20.4MB VRAM](http://i.imgur.com/jYDpW.jpg)
   
+We currently use a *very* dirty system for closing down our file checker. This probablly will cause a lot of bugs, and WILL KILL OTHER PYTHON SCRIPTS RUNNING IN THE BACKGROUND! Please see [Issue #7](https://github.com/b1naryth1ef/pydskchk/issues/7)
 ###Roadmap
 PyDskChk is planned to be more then just a small tool. Later on this year a project will spawn using PyDskChk and other tools to provide an all-around system monitor / notifier for python.   
 V0.3 : Full email support, more settings and tweaking abilities.   
@@ -61,7 +66,7 @@ V0.6 : Suport for more interfaces.
 ###Thanks To  
 ####PyDskChk deserves credit to a few people...  
 Bob2 on Freenode's Python for recommending while True:  
-[Patrick](http://talk.jeelabs.net/topic/704) from the JeeLabs talk forums for getting me intrested in making the disk checker email people...
+[Patrick](http://talk.jeelabs.net/topic/704) from the JeeLabs talk forums for getting me intrested in making the disk checker email people...  
 [Strike](http://forums.devshed.com/member.php?u=13758) from the devshed forums for shedding light on my File Changes problem.
   
 ####PyDskChk uses a few systems...  

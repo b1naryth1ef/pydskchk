@@ -1,16 +1,13 @@
-import smtplib
 import string
 import os
 import time
 import sys
-from email.mime.text import MIMEText
-from reqs.configobj import ConfigObj
-import reqs.downloader
-import socket
-import urllib2
+from configobj import ConfigObj
+import downloader
 from etc import MemoryMonitor
 import subprocess
 import signal
+import etc
 __Version__ = "0.2.4.1B"
 versionhash = "001"
  
@@ -28,13 +25,6 @@ delay = config['delay']
 fchanges = config['filechanges']
 filepath = config['file']
 
-def external():
-    ip = urllib2.urlopen("http://www.whatismyip.com/automation/n09230945.asp").read()
-    return ip
-     
-def internal():
-    internal = socket.gethostbyname(socket.gethostname())
-    return internal
 
 def checkos():
     if osdis == "mac":
@@ -70,26 +60,10 @@ def memusage(): #not in use currently
     memory_mon = MemoryMonitor('username')
     used_memory = memory_mon.usage()
     return used_memory
-def doemail(location,reason):
-    exip = external()
-    inip = internal()
-    print "Sending email..."
-    subject = "Disk/Folder:"+path+" is missing!"
-    func = "There is a disk or folder error (001) on disk/folder: "+path+" . \nExternal IP of: "+exip+"\nInternal IP of: "+inip+" .\n"
-    msg = MIMEText(func)
-    msg['Subject'] = 'Disk error on ' + path
-    msg['From'] = sentfrom
-    msg['To'] = email     # functions to send an email
-    server = smtplib.SMTP(smtpserver)
-    server.ehlo()
-    server.starttls()
-    server.ehlo()
-    server.login(username,password)
-    server.sendmail(sentfrom, email, msg.as_string())
-    server.quit()
-    print " SENT!"
 
-		
+def pusher(path,reason):
+    etc.doemail(path,reason)
+    	
 def main():
     if fchanges == "1":
         xf32 = "/Users/Andrei/Code/pydskchk/reqs/test.py"
@@ -104,7 +78,7 @@ def main():
         if x == False:
             print "Disk/Folder Not Found!"
             reason = "Not Found!"
-            doemail(path,reason)
+            etc.doemail(path,reason)
             os.kill(proc.pid, signal.SIGUSR1)
             import sys
             sys.exit()
@@ -113,4 +87,4 @@ def main():
 
     print "Disk checker is running!"
     while True:
-        tester()  
+        tester() 

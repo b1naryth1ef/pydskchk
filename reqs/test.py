@@ -1,6 +1,11 @@
 import os
 import time
 import sys
+import etc
+import diskchecker
+
+
+
 
 filepath = sys.argv[1]
 delay = sys.argv[2]
@@ -13,10 +18,14 @@ def filechanges():
         x2 = os.stat(filepath)
         if x[8] < x2[8]:
             print "Changed"
-            x = os.stat(filepath)
+            reason = "File changed!"
+            diskchecker.pusher(filepath,reason)
+            sys.exit()
         elif x[9] < x2[9]:
             print "changed"
-            x = os.stat(filepath)
+            reason = "File changed!"
+            diskchecker.pusher(filepath,reason)
+            sys.exit()
         else:
            None
 filechanges()

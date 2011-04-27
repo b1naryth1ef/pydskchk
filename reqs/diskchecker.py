@@ -2,13 +2,15 @@ import smtplib
 import string
 import os
 import time
-import email.Utils
+import sys
 from email.mime.text import MIMEText
 from reqs.configobj import ConfigObj
 import reqs.downloader
 import socket
 import urllib2
 from etc import MemoryMonitor
+import subprocess
+import signal
 __Version__ = "0.2.4.1B"
 versionhash = "001"
  
@@ -23,6 +25,8 @@ password = config['password']
 smtpserver = config['server']
 osdis = config['os']
 delay = config['delay']
+fchanges = config['filechanges']
+filepath = config['file']
 
 def external():
     ip = urllib2.urlopen("http://www.whatismyip.com/automation/n09230945.asp").read()
@@ -57,8 +61,7 @@ def updatecheck2():
         reqs.downloader.dl(updurl) 
     else:
         print "No update..."
-        pass
-    
+        pass    
     
 def checker(chkpath):
     return os.path.exists(chkpath)
@@ -85,8 +88,14 @@ def doemail(location,reason):
     server.sendmail(sentfrom, email, msg.as_string())
     server.quit()
     print " SENT!"
+
 		
 def main():
+    if fchanges == "1":
+        xf32 = "/Users/Andrei/Code/pydskchk/reqs/test.py"
+        proc = subprocess.Popen(["python", xf32, filepath, delay])
+    else:
+        None    
     checkos()
     #updatecheck()
     delayx = float(delay)
@@ -96,6 +105,7 @@ def main():
             print "Disk/Folder Not Found!"
             reason = "Not Found!"
             doemail(path,reason)
+            os.kill(proc.pid, signal.SIGUSR1)
             import sys
             sys.exit()
         else:

@@ -8,7 +8,7 @@ PyDskChk is 100% free and opensource, and probably not as good as other disk che
 
 ###Using it
 ####Configuration
-PyDskChk has a settings file for easy customizing and deploying. Simply open up /reqs/example_settings.cfg and edit the settings (described below). Then save the file, and rename it settings.cfg. Run start.py in the home directory and you're all set.
+PyDskChk has a settings file for easy customizing and deploying. Simply open up /reqs/example_settings.cfg and edit the settings (described below). Then save the file, and rename it settings.cfg. Run start.py in the home directory and you're all set. Note for each run you can only choose either checkdisk or checkfile. If both are set to one, checkdisk is used.
   
 checkdisk : Either "1" or "0". This sets whether to check a disk/folder  
 checkfile : Either "1" or "0". This sets whetehr to check a file for changes.  
@@ -18,6 +18,7 @@ fromemail : The email (and smtp login) to send from.
 toemail : The email to send alerts too.  
 password : SMTP Password  
 server : SMTP Server  
+dev : Should be False unless your running this on Mac >10.4 or Windows. True will enable developer features.
 
 ####Hacking
 PyDskChk is open source, so I really encourage people to hack it. One way you can work with it, is by testing out the Windows and Linux functionality for me (And reporting [issues](https://github.com/b1naryth1ef/pydskchk/issues) if you find them).
@@ -37,3 +38,10 @@ Bob2 on Freenode's Python for recommending while True:
 ####PyDskChk uses a few systems...  
 [ConfigObj](http://bit.ly/eauaQx) was written by Michael Foord and Nicola Larosa. It's currently used for parsing settings.cfg into our diskchecker.py  
 [SMTPLib](http://effbot.org/librarybook/smtplib.htm) a included module in Python 2.5 and later, it's the core to the email system.  
+###Change Log
+####V0.4.1 
+Added an oschecker and a dev flag. Anyone developing should note that any unconfirmed features should debug or not run in dev = False. Added example_settings.cfg which was left out in the previous version.
+Main.py -- Imports platform for our version checking (a much better version checker then before). Added dev flag in the config loader. Added a simple loading message for debugs. 
+Next up: Logs, and *possibly* allowing running disk and file checker at the same time.
+####V0.4
+No real changelog as the entire module was rewritten. Added simple module support (see Hacking above). Everything is in one file now, which means you cannot load up both disk checker and file checker at the same time, but theres a much cleaner system anyway.

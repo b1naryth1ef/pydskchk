@@ -9,7 +9,8 @@ from email.mime.text import MIMEText
 from configobj import ConfigObj
 import socket
 import urllib2
-__Version__ = "0.0.1"
+import platform
+__Version__ = "0.4.1"
 config = ConfigObj("./reqs/settings.cfg")
 checkdisk = config['checkdisk']
 checkfile = config['checkfile']
@@ -19,16 +20,28 @@ email = config['fromemail']
 toemail = config['toemail']
 password = config['password']
 surv = config['server']
+dev = config['dev']
+def oscheckr():
+    osname = platform.system()
+    osver = platform.release()
+    if osname == "Darwin":
+        if osver > 10.4:
+            print "PyDskChk Version:",__Version__,"loaded on Mac",osver
+        elif osver < 10.4:
+            if dev = True:
+                print "PyDskChk Version:",__Version__,"loaded on Mac",osver,"[DEV MODE]"
+            else:
+                print "Mac support is buggy on systems older then Mac 10.4. Set the 'dev = True' flag in the settings file to use this on",osver
+                sys.exit()
+    if osname == "Windows":
+        if dev = True:
+            print "PyDskChk Version:",__Version__,"loaded on",osname,osver,"[DEV MODE]"
+        else:
+            print "Windows support is buggy. Set the 'dev = True' in the settings file to use this on Windows"
+            sys.exit()
 
-def filecheckermod(path,interval):
-    x = os.stat(path)
-    time.sleep(interval)
-    x = os.stat(path)
-    if x[8] < x2[8]:
-        return True
-    else:
-        return False
-
+oscheckr()
+    
 def external():
     ip = urllib2.urlopen("http://www.whatismyip.com/automation/n09230945.asp").read()
     return ip

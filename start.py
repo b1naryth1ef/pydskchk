@@ -1,2 +1,2 @@
-import reqs.diskchecker
-reqs.diskchecker.main()
+import reqs.Main
+reqs.Main.main()

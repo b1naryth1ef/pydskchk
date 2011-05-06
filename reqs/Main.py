@@ -12,10 +12,12 @@ import urllib2
 import platform
 import threading
 from threading import Thread
+import subprocess
 __Version__ = "0.4.3"
 config = ConfigObj("./reqs/settings.cfg")
 checkdisk = config['checkdisk']
 checkfile = config['checkfile']
+playsound = config['sound']
 path2 = config['diskpath']
 path = config['filepath']
 email = config['fromemail']
@@ -23,23 +25,49 @@ toemail = config['toemail']
 password = config['password']
 surv = config['server']
 dev = config['dev']
+traces = []
+
 def dp(message):
-    if dev == 'True' or 'Full':
+    if dev == 'True':
         print "\t[DEV] "+message
+    elif dev =='Full':
+        print "\t[FULL] "+message
     else:
         pass
+
 def er(message,details):
-    if dev == 'True' or 'Full':
+    if dev == 'True':
+        print "\t[ERROR] "+message+" "+details
+    elif dev == 'Full':
         print "\t[ERROR] "+message+" "+details
     elif dev == 'False':
         print "\t[ERROR] "+message
     else:
-        pass 
+        pass
+         
 def trace(message):
     if dev == 'Full':
         print "\t[TRACE] "+message
+        traces.append(message)
     else:
         pass  
+
+def die(message):
+    if dev == 'True':
+        print "\t[DEV] Shutting down:", message
+        sys.exit()
+    elif dev == 'False':
+        sys.exit()
+    elif dev == 'Full':
+        print "\t[FULL] Shutting down...", message
+        print  traces
+        sys.exit()
+
+def alert():
+    if playsound == "1":
+        subprocess.Popen(["afplay", "./reqs/etc/alert.wav"])
+    else:
+        pass
 def oscheckr():
     trace("@oscheckr Start")
     osname = platform.system()
@@ -55,14 +83,14 @@ def oscheckr():
                 print "PyDskChk Version:",__Version__,"loaded on Mac",osver,"[DEV MODE]"
             else:
                 print "Mac support is buggy on systems older then Mac 10.4. Set the 'dev = 'True'' flag in the settings file to use this on",osver
-                sys.exit()
+                die("Mac <10.4 support is buggy. Dev =! 'True'")
     if osname == "Windows":
         if dev == 'True':
             print "PyDskChk Version:",__Version__,"loaded on",osname,osver,"[DEV MODE]"
         else:
             print "Windows support is buggy. Set the 'dev = 'True'' in the settings file to use this on Windows"
             trace("_SYSTEM EXIT_")
-            sys.exit()
+            die("Windows is not supported if dev = 'False'")
 
 oscheckr()
     
@@ -84,20 +112,22 @@ def filechecker(path,interval):
     x2 = os.stat(path)
     if x[8] < x2[8]:
         trace("@filechecker/fail/x[8]")
+        alert()
         print "Changed! [1]"
         eip = external()
         iip = internal()
         message = "The file or folder: "+path+" has been changed, modified or deleted.\n External IP: "+eip+" \nInternal IP: "+iip
         mailer(message) 
-        sys.exit()
+        die("File Changed...")
     elif x[9] < x2[9]:
         trace("@filechecker/fail/x[9]")
+        alert()
         print "Changed! [2]"
         eip = external()
         iip = internal()
         message = "The file or folder: "+path+" has been changed, modified or deleted.\nExternal IP: "+eip+" \nInternal IP: "+iip 
         mailer(message) 
-        sys.exit()
+        die("File Changed [2]...")
     else:
         None
 
@@ -106,13 +136,13 @@ def diskchecker(path,interval):
     x = os.path.exists(path)
     if x == False:
         trace("@diskchecker/fail/x")
+        alert()
         eip = external()
         iip = internal()
         print "Disk/Folder at "+path+" Not Found!"
         message = "A Disk or Folder located at "+path+" become locked, unavalible or was deleted!\nExternal IP: "+eip+"\nInternal IP: "+iip
         mailer(message)
-        import sys
-        sys.exit()
+        die("Disk Changed")
     else:
         time.sleep(delayx)
 
@@ -136,22 +166,26 @@ def mailer(msgx):
     server.close()
     dp("Server connection severed")
     print "MESSAGE SENT!"
+
 def initdisk(path,time):
     trace("@initdisk")
     dp("Loaded DiskChecker")
     while True:
         diskchecker(path,time)
+
 def initfile(path,time):
     trace("@filechecker") 
     dp("Loaded FileChecker")  
     while True:
         filechecker(path,time)
+
 def both(path1,time1,path2,time2):
     dp("Loaded File&Disk Checker")
     trace("@both")
     while True:
         filechecker(path2,time2)
         diskchecker(path1,time1)
+
 def main():
     trace("@main")
     dp("Loaded main function")

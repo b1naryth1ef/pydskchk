@@ -38,10 +38,3 @@ Bob2 on Freenode's Python for recommending while True:
 ####PyDskChk uses a few systems...  
 [ConfigObj](http://bit.ly/eauaQx) was written by Michael Foord and Nicola Larosa. It's currently used for parsing settings.cfg into our diskchecker.py  
 [SMTPLib](http://effbot.org/librarybook/smtplib.htm) a included module in Python 2.5 and later, it's the core to the email system.  
-###Change Log
-####V0.4.1 
-Added an oschecker and a dev flag. Anyone developing should note that any unconfirmed features should debug or not run in dev = False. Added example_settings.cfg which was left out in the previous version.
-Main.py -- Imports platform for our version checking (a much better version checker then before). Added dev flag in the config loader. Added a simple loading message for debugs. 
-Next up: Logs, and *possibly* allowing running disk and file checker at the same time.
-####V0.4
-No real changelog as the entire module was rewritten. Added simple module support (see Hacking above). Everything is in one file now, which means you cannot load up both disk checker and file checker at the same time, but theres a much cleaner system anyway.

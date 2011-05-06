@@ -10,7 +10,9 @@ from configobj import ConfigObj
 import socket
 import urllib2
 import platform
-__Version__ = "0.4.1"
+import threading
+from threading import Thread
+__Version__ = "0.4.2"
 config = ConfigObj("./reqs/settings.cfg")
 checkdisk = config['checkdisk']
 checkfile = config['checkfile']
@@ -28,13 +30,13 @@ def oscheckr():
         if osver > 10.4:
             print "PyDskChk Version:",__Version__,"loaded on Mac",osver
         elif osver < 10.4:
-            if dev = True:
+            if dev == True:
                 print "PyDskChk Version:",__Version__,"loaded on Mac",osver,"[DEV MODE]"
             else:
                 print "Mac support is buggy on systems older then Mac 10.4. Set the 'dev = True' flag in the settings file to use this on",osver
                 sys.exit()
     if osname == "Windows":
-        if dev = True:
+        if dev == True:
             print "PyDskChk Version:",__Version__,"loaded on",osname,osver,"[DEV MODE]"
         else:
             print "Windows support is buggy. Set the 'dev = True' in the settings file to use this on Windows"
@@ -84,6 +86,7 @@ def diskchecker(path,interval):
         time.sleep(delayx)
 
 def mailer(msgx):
+    print "Mailing error message"
     msg = MIMEText(msgx)
     msg['Subject'] = 'Disk or file error!'
     msg['From'] = email
@@ -95,20 +98,27 @@ def mailer(msgx):
     server.login(email,password)
     server.sendmail(email,toemail,msg.as_string())
     server.close()
-
+def initdisk(path,time):
+    print "Disk checker running! ["+path+"]"
+    while True:
+        diskchecker(path,time)
+def initfile(path,time):
+    print "File checker running! ["+path+"]"
+    while True:
+        filechecker(path,time)
+def both(path1,time1,path2,time2):
+    print "Disk checker running! ["+path1+"]"
+    print "File checker running! ["+path2+"]"
+    while True:
+        filechecker(path2,time2)
+        diskchecker(path1,time1)
 def main():
-    if checkdisk == "1":
-        print "Disk Checker initated on "+path2
-        while True:
-            diskchecker(path2,5)
-    else:
-        pass
-    if checkfile == "1":
-        print "File Checker initated on "+path
-        while True:
-            filechecker(path,5)
-    else: 
-        pass
+    if checkdisk == "1" and checkfile=="0":
+        Thread(target = initdisk, args =(path2,5) ).start()
+    elif checkfile == "1" and checkdisk=="1":
+        Thread(target = both, args = (path2,5,path,5) ).start()
+    elif checkfile == "1" and checkdisk=="0":
+        Thread(target = initfile, args =(path,5)).start()
         
 #Final stuff... Keep at the end
 if __name__ == '__main__':

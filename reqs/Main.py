@@ -13,7 +13,7 @@ import platform
 import threading
 from threading import Thread
 import subprocess
-__Version__ = "0.4.3"
+__Version__ = "0.4.5"
 config = ConfigObj("./reqs/settings.cfg")
 checkdisk = config['checkdisk']
 checkfile = config['checkfile']

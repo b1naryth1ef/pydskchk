@@ -1,6 +1,6 @@
 ##PyDskChk
 
-![PyDskChk Command Line](http://i.imgur.com/HTbqc.jpg)
+![PyDskChk Command Line](http://i.imgur.com/s9RYF.jpg)
 
 PyDskChk, or Python Disk Checker, is a simple, minimalistic, low resources monitoring system for disks, files and folders. It has both local console functionality, and remote SMTP functionality for email alerts. PyDskChk for disks and folders, uses Pythons built it os.path.exists() function to check when a path or disk becomes unavalible. It then reports that to the console, and can email you. PyDskChk was developed for a large server system partly maintaned by its devloper, [Andrei Zbikowski](http://az.wbbmx.org/) a teen developer.
   

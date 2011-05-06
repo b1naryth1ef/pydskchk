@@ -24,19 +24,34 @@ password = config['password']
 surv = config['server']
 dev = config['dev']
 def dp(message):
-    if dev == 'True':
+    if dev == 'True' or 'Full':
         print "\t[DEV] "+message
     else:
         pass
-    
+def er(message,details):
+    if dev == 'True' or 'Full':
+        print "\t[ERROR] "+message+" "+details
+    elif dev == 'False':
+        print "\t[ERROR] "+message
+    else:
+        pass 
+def trace(message):
+    if dev == 'Full':
+        print "\t[TRACE] "+message
+    else:
+        pass  
 def oscheckr():
+    trace("@oscheckr Start")
     osname = platform.system()
     osver = platform.release()
+    trace("@oscheckr_if")
     if osname == "Darwin":
         if osver > 10.4:
             print "PyDskChk Version:",__Version__,"loaded on Mac",osver
+            dp("Loaded on Mac <10.4")
         elif osver < 10.4:
             if dev == 'True':
+                dp("Loaded on Mac >10.4")
                 print "PyDskChk Version:",__Version__,"loaded on Mac",osver,"[DEV MODE]"
             else:
                 print "Mac support is buggy on systems older then Mac 10.4. Set the 'dev = 'True'' flag in the settings file to use this on",osver
@@ -46,16 +61,19 @@ def oscheckr():
             print "PyDskChk Version:",__Version__,"loaded on",osname,osver,"[DEV MODE]"
         else:
             print "Windows support is buggy. Set the 'dev = 'True'' in the settings file to use this on Windows"
+            trace("_SYSTEM EXIT_")
             sys.exit()
 
 oscheckr()
     
 def external():
+    trace("@external")
     dp("Called external IP")
     ip = urllib2.urlopen("http://www.whatismyip.com/automation/n09230945.asp").read()
     return ip
      
 def internal():
+    trace("@internal")
     dp("Called internal IP")
     internal = socket.gethostbyname(socket.gethostname())
     return internal
@@ -65,6 +83,7 @@ def filechecker(path,interval):
     time.sleep(5)
     x2 = os.stat(path)
     if x[8] < x2[8]:
+        trace("@filechecker/fail/x[8]")
         print "Changed! [1]"
         eip = external()
         iip = internal()
@@ -72,6 +91,7 @@ def filechecker(path,interval):
         mailer(message) 
         sys.exit()
     elif x[9] < x2[9]:
+        trace("@filechecker/fail/x[9]")
         print "Changed! [2]"
         eip = external()
         iip = internal()
@@ -85,6 +105,7 @@ def diskchecker(path,interval):
     delayx = float(interval)
     x = os.path.exists(path)
     if x == False:
+        trace("@diskchecker/fail/x")
         eip = external()
         iip = internal()
         print "Disk/Folder at "+path+" Not Found!"
@@ -96,6 +117,7 @@ def diskchecker(path,interval):
         time.sleep(delayx)
 
 def mailer(msgx):
+    trace("@mailer")
     print "Mailing error message..."
     dp("Called mailer")
     msg = MIMEText(msgx)
@@ -115,17 +137,24 @@ def mailer(msgx):
     dp("Server connection severed")
     print "MESSAGE SENT!"
 def initdisk(path,time):
+    trace("@initdisk")
+    dp("Loaded DiskChecker")
     while True:
         diskchecker(path,time)
-def initfile(path,time):   
+def initfile(path,time):
+    trace("@filechecker") 
+    dp("Loaded FileChecker")  
     while True:
         filechecker(path,time)
 def both(path1,time1,path2,time2):
+    dp("Loaded File&Disk Checker")
+    trace("@both")
     while True:
         filechecker(path2,time2)
         diskchecker(path1,time1)
 def main():
-    dp("@main")
+    trace("@main")
+    dp("Loaded main function")
     if checkdisk == "1" and checkfile=="0":
         dp("Diskchecker running, file checker off")
         print "Disk checker running! ["+path2+"]"
@@ -142,4 +171,5 @@ def main():
         
 #Final stuff... Keep at the end
 if __name__ == '__main__':
-	main()
+    trace("@__name__")
+    main()

@@ -1,18 +1,11 @@
 #!/usr/bin/env python
 # encoding: utf-8
-import sys
-import os
-import smtplib
+import sys, os, smtplib, time, socket, urllib2, platform, threading, subprocess
 from email.MIMEText import MIMEText
-import time
 from email.mime.text import MIMEText
 from configobj import ConfigObj
-import socket
-import urllib2
-import platform
-import threading
 from threading import Thread
-import subprocess
+
 __Version__ = "0.4.5"
 config = ConfigObj("./reqs/settings.cfg")
 checkdisk = config['checkdisk']

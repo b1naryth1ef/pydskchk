@@ -21,13 +21,11 @@ dev = config['dev']
 traces = []
 
 def dp(message):
-    if dev == 'True':
+    if dev is 'True':
         print "\t[DEV] "+message
-    elif dev =='Full':
-        print "\t[FULL] "+message
     else:
-        pass
-
+        print "\t[FULL] "+message
+        
 def er(message,details):
     if dev == 'True':
         print "\t[ERROR] "+message+" "+details
